@@ -1,7 +1,7 @@
 // Состояние медиафасада и камеры как чистые функции от кадра.
 import * as THREE from 'three';
 import {Easing, interpolate} from 'remotion';
-import {FPS, TOWER_EVENTS, beatToFrame, frameToBeat} from '../config';
+import {FPS, LETTER_BEATS, TOWER_EVENTS, beatToFrame, frameToBeat} from '../config';
 import {TEXTS} from '../brand';
 import {MarqueeLayout, MarqueeState} from './marquee';
 import {hash} from './random';
@@ -38,9 +38,7 @@ export type FacadeProgram = {
 
 /** Программа для пролёта из сценария: буквы по шестнадцатым, полное название на дропе. */
 export const filmProgram = (): FacadeProgram => ({
-	letterFrames: Array.from({length: N}, (_, i) =>
-		beatToFrame(TOWER_EVENTS.lettersStart + (i * (TOWER_EVENTS.drop - TOWER_EVENTS.lettersStart)) / (N - 1) - 0.25),
-	),
+	letterFrames: LETTER_BEATS.map(beatToFrame),
 	waveStart: beatToFrame(TOWER_EVENTS.drop),
 	waveDuration: beatToFrame(1.5),
 	glitchFrame: beatToFrame(TOWER_EVENTS.glitch),

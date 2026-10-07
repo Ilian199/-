@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "studio": "remotion studio",
-    "check:text": "tsx scripts/check-text.ts"
+    "check:text": "tsx scripts/check-text.ts",
+    "audio": "tsx scripts/make-audio.ts",
+    "still": "bash scripts/still.sh"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.1",

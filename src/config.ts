@@ -45,3 +45,40 @@ export const TOWER_EVENTS = {
 	flash: 10, // вспышка и переход в 2D
 	finaleWave: 41, // световая волна в финале
 } as const;
+
+/** Загорание букв «ЦИФРОПРАКТИКА» (доли): по одной, последняя — на шестнадцатую перед дропом. */
+export const LETTER_COUNT = 13;
+export const LETTER_BEATS = Array.from(
+	{length: LETTER_COUNT},
+	(_, i) => TOWER_EVENTS.lettersStart + (i * (TOWER_EVENTS.drop - TOWER_EVENTS.lettersStart)) / (LETTER_COUNT - 1) - 0.25,
+);
+
+/** Сцена 3 (доли от её начала). */
+export const PROBLEM_BEATS = {phrases: [0, 1, 2] as const, strike: 3, familiar: 4};
+/** Сцена 4 (доли от её начала). */
+export const SLOGAN_BEATS = {line: 0, plate: 1, zoomThrough: 3.35};
+
+/** Сцена 5 (доли от её начала). */
+export const APP_BEATS = {
+	phoneIn: 0,
+	title: 0.5,
+	cards: [1, 1.5, 2] as const,
+	tapCard: 3,
+	toBooking: 3.5,
+	tapDate: 4.5,
+	toast: 5.5,
+	toRequests: 7,
+	tapSend: 8,
+	rowIn: 9,
+	accepted: 10,
+	toEvents: 11,
+	tapReport: 12.5,
+	whip: 14.6,
+	end: 15,
+};
+
+/** Сцена 6 (доли от её начала). */
+export const STEP_BEATS = {steps: [0, 1, 2] as const, pulse: 3, collapse: 3.4};
+
+/** Сцена 7 (доли от её начала): волна, логотип, ссылка, подпись, финальный удар. */
+export const FINALE_BEATS = {wave: 2, logo: 3, link: 4, line1: 4.5, line2: 5, finalHit: 5, end: 9};
