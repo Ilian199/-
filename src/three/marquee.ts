@@ -167,7 +167,7 @@ export class MarqueePainter {
 				ctx.globalAlpha = Math.min(1, lv * (level > 1 ? 1 + (level - 1) * 1.5 : 1)) * (l.teal ? 1 : 0.55);
 				ctx.fillStyle = glowCol;
 				ctx.strokeStyle = glowCol;
-				ctx.lineWidth = L.fs * 0.05;
+				ctx.lineWidth = L.fs * 0.03;
 				ctx.fillText(l.ch, l.x, L.baseline);
 				ctx.strokeText(l.ch, l.x, L.baseline);
 				return;
@@ -177,7 +177,7 @@ export class MarqueePainter {
 			ctx.fillStyle = l.teal ? mixHex('#C8FFF8', '#FFFFFF', w) : '#FFFFFF';
 			ctx.fillText(l.ch, l.x, L.baseline);
 			ctx.strokeStyle = rim;
-			ctx.lineWidth = L.fs * (l.teal ? 0.1 : 0.06) * (1 - w * 0.5);
+			ctx.lineWidth = L.fs * (l.teal ? 0.065 : 0.045) * (1 - w * 0.5);
 			ctx.strokeText(l.ch, l.x, L.baseline);
 			if (level > 1) {
 				// вспышка при зажигании: кант выгорает в белое
@@ -284,9 +284,9 @@ export class MarqueePainter {
 		ctx.imageSmoothingEnabled = true;
 		ctx.imageSmoothingQuality = 'high';
 		const layers: [number, number][] = [
-			[30, 0.32],
-			[12, 0.42],
-			[4, 0.5],
+			[26, 0.2],
+			[10, 0.26],
+			[3, 0.3],
 		];
 		for (const [r, a] of layers) {
 			bctx.globalAlpha = 1;

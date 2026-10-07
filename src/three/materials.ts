@@ -117,7 +117,7 @@ export const makeMediaFacadeMaterial = (map: THREE.Texture, grid: THREE.Vector2)
 			uScroll: {value: 0},
 			uGlitch: {value: 0},
 			uSeed: {value: 0},
-			uGain: {value: 2.2},
+			uGain: {value: 1.9},
 			uFlash: {value: 0},
 			uFog: {value: FOG_DENSITY},
 		},
@@ -145,7 +145,8 @@ export const makeMediaFacadeMaterial = (map: THREE.Texture, grid: THREE.Vector2)
 				vec2 fw = vec2(length(vec2(dFdx(g.x), dFdy(g.x))), length(vec2(dFdx(g.y), dFdy(g.y))));
 				float cellPx = 1.0 / max(max(fw.x, fw.y), 1e-5);
 				float near = smoothstep(2.6, 5.0, cellPx);
-				vec2 uvS = mix(uv, (floor(g) + 0.5) / uGrid, near);
+				// чёткие края букв: цвет берём по точным uv, сетка светодиодов только модулирует яркость
+				vec2 uvS = uv;
 				float sh = 0.0035 * uGlitch;
 				vec3 c;
 				c.r = textureGrad(uMap, uvS + vec2(sh, 0.0), duvx, duvy).r;
@@ -153,13 +154,13 @@ export const makeMediaFacadeMaterial = (map: THREE.Texture, grid: THREE.Vector2)
 				c.b = textureGrad(uMap, uvS - vec2(sh, 0.0), duvx, duvy).b;
 				vec2 f = fract(g) - 0.5;
 				vec2 q = abs(f);
-				float led = (1.0 - smoothstep(0.30, 0.42, q.x)) * (1.0 - smoothstep(0.30, 0.42, q.y));
-				float mask = mix(1.0, led * 1.55, near);
+				float led = (1.0 - smoothstep(0.37, 0.48, q.x)) * (1.0 - smoothstep(0.37, 0.48, q.y));
+				float mask = mix(1.0, led * 1.25, near * 0.85);
 				float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
 				vec3 viewDir = normalize(cameraPosition - vWP);
 				float ndv = clamp(dot(normalize(vWN), viewDir), 0.0, 1.0);
 				float angular = mix(0.45, 1.0, ndv);
-				vec3 hdr = c * uGain * (0.6 + 2.4 * lum * lum) * angular;
+				vec3 hdr = c * uGain * (0.55 + 1.45 * lum * lum) * angular;
 				gl_FragColor = vec4((hdr * mask + vec3(uFlash)) * fogFactor(vWP), 1.0);
 			}`,
 	});

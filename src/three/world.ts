@@ -557,7 +557,7 @@ export const buildWorld = (layout: MarqueeLayout, painter: MarqueePainter): Worl
 		facadeMat.uniforms.uScroll.value = f.scroll;
 		facadeMat.uniforms.uGlitch.value = f.glitch;
 		facadeMat.uniforms.uSeed.value = f.glitchSeed;
-		facadeMat.uniforms.uGain.value = 2.2 * f.facadeGain;
+		facadeMat.uniforms.uGain.value = 1.9 * f.facadeGain;
 		facadeMat.uniforms.uFlash.value = f.facadeFlash;
 		reflMat.map!.offset.x = f.scroll;
 		const lit = f.marquee.letterLevel.reduce((a, b) => a + Math.min(b, 1.5), 0) / f.marquee.letterLevel.length;
