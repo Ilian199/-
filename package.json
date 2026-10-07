@@ -1,0 +1,26 @@
+{
+  "name": "cifropraktika-promo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "check:text": "tsx scripts/check-text.ts"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.8.1",
+    "@remotion/cli": "^4.0.534",
+    "@remotion/layout-utils": "^4.0.534",
+    "@remotion/media-utils": "^4.0.534",
+    "@remotion/motion-blur": "^4.0.534",
+    "@remotion/three": "^4.0.534",
+    "@types/react": "^19.3.0",
+    "@types/three": "^0.186.0",
+    "postprocessing": "^6.39.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.534",
+    "three": "^0.186.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
