@@ -147,3 +147,47 @@ export const TowerFinale: React.FC = () => {
 	const director = useMemo(finaleDirector, []);
 	return <TowerScene director={director} />;
 };
+
+// ---------- ролик 2: короткий стингер (3 доли) ----------
+const AS = 0.1;
+export const stingerDirector = (lenFrames: number): TowerDirector => {
+	const fDiveS = Math.round(lenFrames * 0.72);
+	return {
+		camera: (f) => {
+			if (f < fDiveS) {
+				const t = seg(f, 0, fDiveS, Easing.bezier(0.16, 1, 0.3, 1));
+				return {pos: polar(AS + lerp(0.35, 0, t), lerp(170, 112, t), lerp(yb - 30, yb - 5, t)), target: new THREE.Vector3(0, yb + 1, 0), fov: 42};
+			}
+			const t = seg(f, fDiveS, lenFrames, Easing.bezier(0.7, 0, 0.95, 0.4));
+			return {pos: polar(AS, lerp(112, TOWER.rx + 1.3, t), lerp(yb - 5, yb, t)), target: new THREE.Vector3(0, yb, 0), fov: lerp(42, 30, t)};
+		},
+		facade: (f, L) => {
+			const s = facadeState(
+				f,
+				L,
+				{
+					// буквы вспыхивают быстрой волной слева направо
+					letterFrames: Array.from({length: 13}, (_, i) => Math.round(i * 1.2)),
+					waveStart: 18,
+					waveDuration: 16,
+					glitchFrame: null,
+					sloganFrame: 6,
+					scrollSpeed: 0,
+					scrollOffset: 0,
+				},
+				scrollToFace(L, AS),
+			);
+			const flash = interpolate(f, [lenFrames - 5, lenFrames], [0, 3.5], {
+				extrapolateLeft: 'clamp',
+				extrapolateRight: 'clamp',
+				easing: Easing.in(Easing.cubic),
+			});
+			return {...s, facadeGain: 1, facadeFlash: flash};
+		},
+	};
+};
+
+export const TowerStinger: React.FC<{lenFrames: number}> = ({lenFrames}) => {
+	const director = useMemo(() => stingerDirector(lenFrames), [lenFrames]);
+	return <TowerScene director={director} />;
+};

@@ -17,7 +17,7 @@ const F = beatToFrame;
 const span = (s: {from: number; to: number}) => ({from: F(s.from), durationInFrames: F(s.to) - F(s.from)});
 
 /** Вспышка после влёта камеры в медиафасад: белый → бирюзовый → прозрачный. */
-const DiveFlash: React.FC = () => {
+export const DiveFlash: React.FC = () => {
 	const f = useCurrentFrame();
 	return (
 		<AbsoluteFill

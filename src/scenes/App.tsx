@@ -26,7 +26,7 @@ export const b = (x: number) => lbf(S, x);
 
 const A = APP_BEATS;
 
-const Caption: React.FC<{spec: TextSpec; from: number; to: number}> = ({spec, from, to}) => {
+export const Caption: React.FC<{spec: TextSpec; from: number; to: number}> = ({spec, from, to}) => {
 	const f = useCurrentFrame();
 	if (f < from - 1 || f > to + 6) return null;
 	const pin = snap(f, from, {stiffness: 500, damping: 24});
@@ -47,7 +47,7 @@ const Caption: React.FC<{spec: TextSpec; from: number; to: number}> = ({spec, fr
 };
 
 /** Смена экранов внутри телефона: короткий кросс-фейд со сдвигом, без обрезки текста. */
-const Screen: React.FC<{from: number; to: number; children: React.ReactNode}> = ({from, to, children}) => {
+export const Screen: React.FC<{from: number; to: number; children: React.ReactNode}> = ({from, to, children}) => {
 	const f = useCurrentFrame();
 	if (f < from || f >= to + 5) return null;
 	const pin = tween(f, [from, from + 6], [0, 1], ease.outCubic);

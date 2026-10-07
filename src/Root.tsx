@@ -4,6 +4,8 @@ import {DURATION_IN_FRAMES, FPS, HEIGHT, WIDTH} from './config';
 import {Promo} from './Promo';
 import {TextCheck} from './TextCheck';
 import {TowerPreview} from './scenes/TowerPreview';
+import {DURATION2} from './v2/config';
+import {Promo2} from './v2/Promo2';
 
 export const RemotionRoot: React.FC = () => (
 	<>
@@ -11,6 +13,15 @@ export const RemotionRoot: React.FC = () => (
 			id="Promo"
 			component={Promo}
 			durationInFrames={DURATION_IN_FRAMES}
+			fps={FPS}
+			width={WIDTH}
+			height={HEIGHT}
+			defaultProps={{withAudio: true}}
+		/>
+		<Composition
+			id="Promo2"
+			component={Promo2}
+			durationInFrames={DURATION2}
 			fps={FPS}
 			width={WIDTH}
 			height={HEIGHT}

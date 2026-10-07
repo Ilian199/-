@@ -10,11 +10,14 @@ import {Bg} from '../components/common';
 import {SafeText, measureAtMaxScale, safeFontSize} from '../components/SafeText';
 import {T} from '../texts';
 
-const S = SCENES.slogan.from;
-const b = (x: number) => lbf(S, x);
-
-export const Slogan: React.FC = () => {
+/** from — доля начала сцены, len — её длина в долях (используется и во втором ролике). */
+export const Slogan: React.FC<{from?: number; len?: number; plateAt?: number}> = ({
+	from = SCENES.slogan.from,
+	len = SCENES.slogan.to - SCENES.slogan.from,
+	plateAt = SLOGAN_BEATS.plate,
+}) => {
 	const f = useCurrentFrame();
+	const b = (x: number) => lbf(from, x);
 	// оба слова одного кегля, как в фирменном макете
 	const fs = Math.min(safeFontSize(T.sloganA), safeFontSize(T.sloganB));
 	const wA = (measureAtMaxScale(T.sloganA).width / T.sloganA.maxScale) * (fs / safeFontSize(T.sloganA));
@@ -27,20 +30,20 @@ export const Slogan: React.FC = () => {
 	const top2 = top1 + fs * 0.97;
 
 	const inA = snap(f, 0, {stiffness: 480, damping: 24});
-	const plate = snap(f, b(SLOGAN_BEATS.plate), {stiffness: 700, damping: 17, mass: 0.6});
-	const textB = snap(f, b(1) + 2, {stiffness: 520, damping: 22});
+	const plate = snap(f, b(plateAt), {stiffness: 700, damping: 17, mass: 0.6});
+	const textB = snap(f, b(plateAt) + 2, {stiffness: 520, damping: 22});
 	// единственный удар сцены — на «автомат»
-	const sh = shakeAt(f, [b(SLOGAN_BEATS.plate)], 9, 5);
-	const push = tween(f, [0, b(3.4)], [1, 1.07], ease.inOutCubic);
+	const sh = shakeAt(f, [b(plateAt)], 9, 5);
+	const push = tween(f, [0, b(len - 0.6)], [1, 1.07], ease.inOutCubic);
 
 	// zoom-through к центру плашки
-	const zt = tween(f, [b(SLOGAN_BEATS.zoomThrough), b(4)], [0, 1], ease.inExpo);
+	const zt = tween(f, [b(len - 0.65), b(len)], [0, 1], ease.inExpo);
 	const zoom = 1 + zt * 22;
 	const textFade = tween(zoom * push, [1.08, 1.12], [1, 0], (t) => t);
 	const ox = SAFE.left + SAFE.maxWidth / 2;
 	const oy = top2 + fs * 0.5;
 
-	const hitFlash = tween(f, [b(1), b(1) + 6], [0.35, 0], ease.outCubic);
+	const hitFlash = tween(f, [b(plateAt), b(plateAt) + 6], [0.35, 0], ease.outCubic);
 
 	return (
 		<Bg>
@@ -82,7 +85,7 @@ export const Slogan: React.FC = () => {
 						position: 'absolute',
 						left,
 						top: top2,
-						opacity: tween(f, [b(1) + 2, b(1) + 4], [0, 1]) * textFade,
+						opacity: tween(f, [b(plateAt) + 2, b(plateAt) + 4], [0, 1]) * textFade,
 						transform: `scale(${1 + 0.04 * (1 - textB)})`,
 						transformOrigin: 'left center',
 					}}

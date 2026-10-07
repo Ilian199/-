@@ -578,3 +578,55 @@ export const Tap: React.FC<{x: number; y: number; t: number}> = ({x, y, t}) => {
 		/>
 	);
 };
+
+// ---------- Сообщения (ролик 2: «до» — хаос переписок) ----------
+const CHATS: {title: keyof typeof T; hue: string}[] = [
+	{title: 'v2ChatActive', hue: '#2B4C8C'},
+	{title: 'v2ChatDm', hue: '#1C6E73'},
+	{title: 'v2ChatComments', hue: '#4A3A8C'},
+	{title: 'v2ChatOrg', hue: '#6B3A5C'},
+	{title: 'v2ChatActive', hue: '#2B5C6C'},
+];
+
+/** Список переписок с непрочитанными (только точки, без счётчиков). `unread` 0..1 — насколько «горит». */
+export const MessagesScreen: React.FC<{unread: number; frame: number}> = ({unread, frame}) => (
+	<>
+		<StatusBar />
+		<At y={92}>
+			<SafeText spec={T.v2Messages} />
+		</At>
+		{CHATS.map((c, i) => {
+			const y = 170 + i * 128;
+			const pulse = 0.65 + 0.35 * Math.sin(frame / 4 + i * 1.7);
+			return (
+				<At key={i} y={y} w={CONTENT_W} style={{height: 108}}>
+					<div style={{position: 'absolute', left: 0, top: 10, width: 84, height: 84, borderRadius: 42, background: c.hue}}>
+						<div style={{position: 'absolute', left: 22, top: 40, width: 40, height: 32, borderRadius: '20px 20px 6px 6px', background: '#ffffff40'}} />
+						<div style={{position: 'absolute', left: 30, top: 16, width: 24, height: 24, borderRadius: 12, background: '#ffffff40'}} />
+					</div>
+					<div style={{position: 'absolute', left: 104, top: 16}}>
+						<SafeText spec={T[c.title]} />
+					</div>
+					<div style={{position: 'absolute', left: 104, top: 58}}>
+						<SafeText spec={T.v2PreviewQ} color="#8FA6CF" />
+					</div>
+					<div
+						style={{
+							position: 'absolute',
+							right: 6,
+							top: 40,
+							width: 26,
+							height: 26,
+							borderRadius: 13,
+							background: COLORS.neon,
+							opacity: unread * pulse,
+							transform: `scale(${0.6 + 0.4 * unread})`,
+							boxShadow: `0 0 ${14 * unread}px ${COLORS.neon}`,
+						}}
+					/>
+				</At>
+			);
+		})}
+		<TabBar active={1} />
+	</>
+);

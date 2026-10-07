@@ -6,7 +6,8 @@
     "studio": "remotion studio",
     "check:text": "tsx scripts/check-text.ts",
     "audio": "tsx scripts/make-audio.ts",
-    "still": "bash scripts/still.sh"
+    "still": "bash scripts/still.sh",
+    "audio2": "tsx scripts/make-audio2.ts"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.1",
