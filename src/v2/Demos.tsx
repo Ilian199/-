@@ -69,8 +69,8 @@ export const Demos: React.FC = () => {
 
 	return (
 		<Bg>
-			<Caption spec={cap(T.v2CapBooking)} from={at(booking.from) + 4} to={at(requests.from)} />
-			<Caption spec={cap(T.v2CapRequests)} from={at(requests.from) + 3} to={at(reports.from)} />
+			<Caption spec={cap(T.v2CapBooking)} from={at(booking.from) + 4} to={at(requests.from) - 2} />
+			<Caption spec={cap(T.v2CapRequests)} from={at(requests.from) + 3} to={at(reports.from) - 2} />
 			<Caption spec={cap(T.v2CapReports)} from={at(reports.from) + 3} to={calmF - 3} />
 			<div
 				style={{

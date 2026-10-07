@@ -4,7 +4,7 @@ import React from 'react';
 import {COLORS} from '../brand';
 import {FONT_FAMILY} from '../fonts';
 import {T} from '../texts';
-import {SafeText} from './SafeText';
+import {SafeText, safeFontSize} from './SafeText';
 import {neonShadow} from './common';
 
 export const PHONE = {x: 225, y: 462, w: 630, h: 1210, r: 80, bezel: 16};
@@ -543,6 +543,7 @@ export const EventsScreen: React.FC<{press: number; glow: number}> = ({press, gl
 /** Иконка файла отчёта, вылетающая из телефона. */
 export const FileIcon: React.FC<{size?: number; variant: number}> = ({size = 120, variant}) => {
 	const band = [COLORS.teal, '#3A7BFF', '#7A4DFF', COLORS.neon][variant % 4];
+	const labelFs = Math.min(safeFontSize(T.uiFile), size * 0.19);
 	return (
 		<div style={{position: 'relative', width: size, height: size * 1.25}}>
 			<svg width={size} height={size * 1.25} viewBox="0 0 96 120" style={{position: 'absolute', inset: 0}}>
@@ -551,8 +552,9 @@ export const FileIcon: React.FC<{size?: number; variant: number}> = ({size = 120
 				<rect x="8" y="72" width="80" height="30" fill={band} />
 				<path d="M22 44 H60 M22 56 H50" stroke="#9FB0D0" strokeWidth="5" strokeLinecap="round" />
 			</svg>
-			<div style={{position: 'absolute', left: 0, width: size, top: size * 0.6 + 4, display: 'flex', justifyContent: 'center'}}>
-				<SafeText spec={T.uiFile} fontSize={size * 0.19} />
+			{/* подпись по центру цветной полосы (полоса y 72..102 в системе 96×120) */}
+			<div style={{position: 'absolute', left: 0, width: size, top: (87 * size) / 96 - labelFs / 2, display: 'flex', justifyContent: 'center'}}>
+				<SafeText spec={T.uiFile} fontSize={labelFs} />
 			</div>
 		</div>
 	);

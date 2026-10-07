@@ -43,7 +43,7 @@ const Banner: React.FC<{src: Src; msg: TextSpec; style: React.CSSProperties}> = 
 				width: BANNER.w,
 				height: BANNER.h,
 				borderRadius: 30,
-				background: 'rgba(31,52,96,0.96)',
+				background: COLORS.card, // непрозрачный: текст телефона не просвечивает
 				boxShadow: '0 18px 40px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.08)',
 				...style,
 			}}
@@ -79,7 +79,7 @@ export const Chaos: React.FC = () => {
 	return (
 		<Bg>
 			{/* телефон с непрочитанными: темнеет по мере потока уведомлений */}
-			<div style={{position: 'absolute', inset: 0, opacity: 1 - 0.45 * pressure - 0.5 * swipe}}>
+			<div style={{position: 'absolute', inset: 0, opacity: 1 - 0.6 * pressure - 0.35 * swipe}}>
 				<PhoneBody glow={0.35 + 0.4 * pressure}>
 					<MessagesScreen unread={Math.min(1, arrived / 3)} frame={f} />
 				</PhoneBody>
@@ -124,14 +124,15 @@ export const Chaos: React.FC = () => {
 			</div>
 			{/* крючок и подписи — сверху, над стопкой */}
 			<div style={{opacity: swipeFade}}>
-				<Caption spec={T.v2Hook} from={F(CHAOS_BEATS.hook)} to={F(CHAOS_BEATS.captions[0])} />
+				{/* старая подпись гаснет (5 кадров) до доли, новая входит ровно на долю — без наложения */}
+				<Caption spec={T.v2Hook} from={F(CHAOS_BEATS.hook)} to={F(CHAOS_BEATS.captions[0]) - 5} />
 				{CHAOS_BEATS.captions.map((c, i) => (
 					<CaptionFixed
 						key={c}
 						spec={[T.v2Chaos1, T.v2Chaos2, T.v2Chaos3][i]}
 						fontSize={capFs}
 						from={F(c)}
-						to={i < 2 ? F(CHAOS_BEATS.captions[i + 1]) : F(9)}
+						to={i < 2 ? F(CHAOS_BEATS.captions[i + 1]) - 5 : F(9)}
 					/>
 				))}
 			</div>

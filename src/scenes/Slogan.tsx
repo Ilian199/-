@@ -43,7 +43,8 @@ export const Slogan: React.FC<{from?: number; len?: number; plateAt?: number}> =
 	const ox = SAFE.left + SAFE.maxWidth / 2;
 	const oy = top2 + fs * 0.5;
 
-	const hitFlash = tween(f, [b(plateAt), b(plateAt) + 6], [0.35, 0], ease.outCubic);
+	// вспышка только на ударе: до плашки её нет (tween зажимает слева в начальное значение)
+	const hitFlash = f < b(plateAt) ? 0 : tween(f, [b(plateAt), b(plateAt) + 6], [0.35, 0], ease.outCubic);
 
 	return (
 		<Bg>

@@ -126,9 +126,9 @@ export const AppScene: React.FC = () => {
 				}}
 			>
 				<div style={{opacity: textOut}}>
-					<Caption spec={T.appTitle} from={b(A.title)} to={b(A.toBooking)} />
-					<Caption spec={T.capBooking} from={b(A.toBooking) + 3} to={b(A.toRequests)} />
-					<Caption spec={T.capRequests} from={b(A.toRequests) + 3} to={b(A.toEvents)} />
+					<Caption spec={T.appTitle} from={b(A.title)} to={b(A.toBooking) - 2} />
+					<Caption spec={T.capBooking} from={b(A.toBooking) + 3} to={b(A.toRequests) - 2} />
+					<Caption spec={T.capRequests} from={b(A.toRequests) + 3} to={b(A.toEvents) - 2} />
 					<Caption spec={T.capReports} from={b(A.toEvents) + 3} to={b(A.end) + 10} />
 				</div>
 				<div
