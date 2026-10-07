@@ -4,7 +4,7 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {COLORS} from '../brand';
 import {APP_BEATS, SCENES} from '../config';
-import {ease, lbf, shakeAt, snap, tween} from '../anim';
+import {ease, lbf, snap, tween} from '../anim';
 import {Bg, CenterLine} from '../components/common';
 import {
 	BookingScreen,
@@ -89,8 +89,6 @@ export const AppScene: React.FC = () => {
 
 	const tealCover = tween(f, [0, 6], [1, 0], ease.outCubic);
 
-	const hits = [b(A.tapCard), b(A.tapDate), b(A.tapSend), b(A.accepted), b(A.tapReport)];
-	const sh = shakeAt(f, hits, 7, 6);
 
 	// экраны
 	const cards: [number, number, number] = [
@@ -123,7 +121,7 @@ export const AppScene: React.FC = () => {
 				style={{
 					position: 'absolute',
 					inset: 0,
-					transform: `translateX(${-whip * 1500}px) ${sh.transform}`,
+					transform: `translateX(${-whip * 1500}px)`,
 					filter: whip > 0.02 ? `blur(${whip * 26}px)` : undefined,
 				}}
 			>
@@ -174,7 +172,7 @@ export const AppScene: React.FC = () => {
 						if (f < start) return null;
 						const x = report.x + (p.x - report.x) * t;
 						const y = report.y + (p.y - report.y) * t - Math.sin(Math.min(1, t) * Math.PI) * 160;
-						const bob = Math.sin((f - start) / 7 + i) * 6;
+						const bob = Math.sin((f - start) / 9 + i) * 3;
 						return (
 							<div
 								key={i}

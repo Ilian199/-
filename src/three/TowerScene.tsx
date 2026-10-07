@@ -29,8 +29,8 @@ export type TowerDirector = {
 
 const shake = (frame: number, amount: number) => {
 	if (amount <= 0) return new THREE.Vector3();
-	const s = (k: number) => Math.sin(frame * k) * Math.sin(frame * k * 0.37 + 1.3);
-	return new THREE.Vector3(s(1.9), s(2.3), s(1.7)).multiplyScalar(amount);
+	// плавный толчок низкой частоты, без мелкой дрожи
+	return new THREE.Vector3(Math.sin(frame * 1.1 + 0.5) * 0.5, Math.sin(frame * 1.1), 0).multiplyScalar(amount);
 };
 
 const World: React.FC<{

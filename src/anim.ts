@@ -29,7 +29,7 @@ export const tween = (
 	easing: (t: number) => number = ease.outExpo,
 ) => interpolate(frame, range, out, {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing});
 
-/** Затухающая тряска после каждого удара из списка кадров. */
+/** Короткий затухающий «толчок» после удара: низкая частота, без мелкой дрожи. */
 export const shakeAt = (frame: number, hits: number[], amp = 18, decayFrames = 9) => {
 	let x = 0;
 	let y = 0;
@@ -38,9 +38,9 @@ export const shakeAt = (frame: number, hits: number[], amp = 18, decayFrames = 9
 		const t = frame - h;
 		if (t < 0 || t > decayFrames * 2.5) continue;
 		const k = Math.exp(-t / decayFrames) * amp;
-		x += Math.sin(t * 2.9 + h) * k;
-		y += Math.cos(t * 3.7 + h * 0.5) * k * 0.8;
-		r += Math.sin(t * 2.1 + h * 1.3) * k * 0.05;
+		x += Math.sin(t * 1.15 + 0.6) * k * 0.6;
+		y += Math.sin(t * 1.15) * k;
+		r += 0;
 	}
 	return {x, y, r, transform: `translate(${x}px, ${y}px) rotate(${r}deg)`};
 };

@@ -4,7 +4,7 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {COLORS} from '../brand';
 import {PROBLEM_BEATS as P, SAFE, SCENES} from '../config';
-import {ease, lbf, shakeAt, snap, tween} from '../anim';
+import {ease, lbf, snap, tween} from '../anim';
 import {Bg, CenterLine, neonShadow} from '../components/common';
 import {SafeText, measureAtMaxScale} from '../components/SafeText';
 import {T, TextSpec} from '../texts';
@@ -75,14 +75,12 @@ const Phrase: React.FC<{spec: TextSpec; y: number; at: number; dir: Dir; strikeA
 
 export const Problem: React.FC = () => {
 	const f = useCurrentFrame();
-	const hits = [b(0), b(1), b(2), b(3), b(4)];
-	const sh = shakeAt(f, hits, 16, 7);
 	const famIn = snap(f, b(P.familiar), {stiffness: 380, damping: 18});
 	const famScale = 1.2 - 0.2 * famIn + tween(f, [b(4.5), b(6)], [0, 0.06], ease.inOutCubic);
 	const famGlow = 0.6 + 0.4 * Math.exp(-Math.max(0, f - b(5)) / 6);
 	return (
 		<Bg>
-			<div style={{position: 'absolute', inset: 0, transform: sh.transform}}>
+			<div style={{position: 'absolute', inset: 0}}>
 				<Phrase spec={T.problem1} y={600} at={b(P.phrases[0])} dir="left" strikeAt={b(P.strike)} outAt={b(P.familiar) - 2} />
 				<Phrase spec={T.problem2} y={860} at={b(P.phrases[1])} dir="right" strikeAt={b(P.strike) + 2} outAt={b(P.familiar) - 2} />
 				<Phrase spec={T.problem3} y={1120} at={b(P.phrases[2])} dir="bottom" strikeAt={b(P.strike) + 4} outAt={b(P.familiar) - 2} />

@@ -90,13 +90,13 @@ export const introDirector = (): TowerDirector => {
 };
 
 export const introShake = (f: number) => {
-	// тряска камеры (в метрах) на сильных долях: дроп, доля 7, глитч; лёгкая дрожь при влёте
+	// короткий толчок камеры (в метрах) только на дропе и глитче
 	let amount = 0;
-	for (const h of [fDrop, F(7), F(TOWER_EVENTS.glitch)]) {
+	for (const h of [fDrop, F(TOWER_EVENTS.glitch)]) {
 		const t = f - h;
-		if (t >= 0 && t < 25) amount += 1.4 * Math.exp(-t / 6);
+		if (t >= 0 && t < 16) amount += 0.8 * Math.exp(-t / 4);
 	}
-	return amount + (f > fDive ? 0.3 : 0);
+	return amount;
 };
 
 // ---------- сцена 7 ----------

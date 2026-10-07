@@ -29,7 +29,8 @@ export const Slogan: React.FC = () => {
 	const inA = snap(f, 0, {stiffness: 480, damping: 24});
 	const plate = snap(f, b(SLOGAN_BEATS.plate), {stiffness: 700, damping: 17, mass: 0.6});
 	const textB = snap(f, b(1) + 2, {stiffness: 520, damping: 22});
-	const sh = shakeAt(f, [b(1), b(2)], 14, 8);
+	// единственный удар сцены — на «автомат»
+	const sh = shakeAt(f, [b(SLOGAN_BEATS.plate)], 9, 5);
 	const push = tween(f, [0, b(3.4)], [1, 1.07], ease.inOutCubic);
 
 	// zoom-through к центру плашки

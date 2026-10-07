@@ -4,7 +4,7 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {COLORS} from '../brand';
 import {SCENES} from '../config';
-import {ease, lbf, shakeAt, snap, tween} from '../anim';
+import {ease, lbf, snap, tween} from '../anim';
 import {Bg, CenterLine, neonShadow} from '../components/common';
 import {SafeText, measureAtMaxScale} from '../components/SafeText';
 import {T, TextSpec} from '../texts';
@@ -66,7 +66,6 @@ const Arrow: React.FC<{y: number; at: number}> = ({y, at}) => {
 
 export const Steps: React.FC = () => {
 	const f = useCurrentFrame();
-	const sh = shakeAt(f, [b(0), b(1), b(2)], 12, 7);
 	const glow = 0.7 + 0.3 * Math.exp(-Math.max(0, f - b(3)) / 5) * (f >= b(3) ? 1 : 0);
 	// выход: всё стягивается в центр
 	const out = tween(f, [b(3.4), b(4)], [0, 1], ease.inExpo);
@@ -76,7 +75,7 @@ export const Steps: React.FC = () => {
 				style={{
 					position: 'absolute',
 					inset: 0,
-					transform: `${sh.transform} scale(${1 - out * 0.98})`,
+					transform: `scale(${1 - out * 0.98})`,
 					transformOrigin: '540px 880px',
 					opacity: 1 - tween(out, [0.7, 1], [0, 1], (t) => t),
 				}}
